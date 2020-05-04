@@ -4,9 +4,9 @@ import { NestFactory } from '@nestjs/core';
 import { ApplicationModule } from '@platform/auto/application.module';
 
 async function bootstrap(): Promise<void> {
-    const application: INestApplication = await NestFactory.create<
-        INestApplication
-    >(ApplicationModule);
+
+    const application: INestApplication =
+        await NestFactory.create<INestApplication>(ApplicationModule);
 
     await application.listen(3000);
 }

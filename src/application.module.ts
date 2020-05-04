@@ -1,12 +1,11 @@
-import { Module } from '@nestjs/common';
-
 import { ScheduleModule } from '@nestjs/schedule';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { BullModule } from '@nestjs/bull';
+import { Module } from '@nestjs/common';
 
 import { ApplicationController } from '@platform/auto/application.controller';
 import { ApplicationService } from '@platform/auto/application.service';
-import { CarParserProcessor } from '@platform/auto/application.consumer';
+
+import { FetchModule } from '@platform/auto/modules/fetch/fetch.module';
 
 @Module({
     imports: [
@@ -21,15 +20,9 @@ import { CarParserProcessor } from '@platform/auto/application.consumer';
             entities: [],
             synchronize: true,
         }),
-        BullModule.registerQueue({
-            name: 'car_parser',
-            redis: {
-                host: 'localhost',
-                port: 6379,
-            },
-        }),
+        FetchModule
     ],
     controllers: [ApplicationController],
-    providers: [ApplicationService, CarParserProcessor],
+    providers: [ApplicationService],
 })
 export class ApplicationModule {}

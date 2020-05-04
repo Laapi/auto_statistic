@@ -1,0 +1,7 @@
+export enum Conditioner {
+    BASIC,
+    CLIMAT_CONTROL,
+    ONE_ZONE_CLIMAT_CONTROL,
+    TWO_ZONE_CLIMAT_CONTROL,
+    MULTI_CLIMAT_CONTROL
+}

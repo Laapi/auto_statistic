@@ -6,6 +6,7 @@ import * as request from 'supertest';
 import { ApplicationModule } from '@platform/auto/application.module';
 
 describe('Application Controller (e2e)', () => {
+
     let application: INestApplication;
 
     beforeEach(
@@ -23,9 +24,11 @@ describe('Application Controller (e2e)', () => {
     );
 
     it('/ (GET)', (): Test => {
+
         return request(application.getHttpServer())
             .get('/')
             .expect(200)
             .expect('Hello World!');
+
     });
 });
