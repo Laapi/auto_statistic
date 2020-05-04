@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="Application" pattern="!file[auto-statistic]:.idea//*&amp;&amp;!file[auto-statistic]:.github//*&amp;&amp;!file[auto-statistic]:build//*" />
+</component>
