@@ -3,37 +3,40 @@ import { Injectable } from '@nestjs/common';
 
 import { Repository } from 'typeorm';
 
-import { JobStatus } from '@platform/auto/data/enum/JobStatus';
-import { JobType } from '@platform/auto/data/enum/JobType';
+import { IJobService } from '@platform/auto/data/contracts/services/IJobService';
+import { IJob } from '@platform/auto/data/contracts/IJob';
+
 import { Job } from '@platform/auto/data/entities/Job';
 
-import * as t from 'dayjs';
-import * as _ from 'lodash';
+import { JobStatus } from '@platform/auto/data/enum/JobStatus';
+import { JobType } from '@platform/auto/data/enum/JobType';
+
+import * as Time from 'dayjs';
+import * as Util from 'lodash';
 
 @Injectable()
-export class JobService {
+export class JobService implements IJobService {
 
     public constructor(
         @InjectRepository(Job)
-        private jobRepository: Repository<Job>,
+        private jobRepository: Repository<IJob>,
     ) {}
 
-    public async createJob(id: string | number, type: JobType): Promise<Job> {
+    public async createJob(id: string | number, type: JobType): Promise<IJob> {
 
         const current_date: number =
-            t().unix();
+            Time().unix();
 
-        const job: Job =
-            new Job(
-                id as string,
-                type, current_date,
-            );
+        const job: IJob = new Job(
+            id as string,
+            type, current_date,
+        );
 
         return this.jobRepository.create(job);
     }
 
-    public async finishJob<T>(id: string, result: Array<T>): Promise<void> {
-        await this.updateJobProgress<T>(
+    public async finishJob<T>(id: string, result: T): Promise<void> {
+        await this.updateJob<T>(
             id,
             100,
             false,
@@ -42,8 +45,8 @@ export class JobService {
         );
     }
 
-    public async markJobAsFailed<T>(id: string, error: Error): Promise<void> {
-        await this.updateJobProgress<T>(
+    public async markJobAsFailed(id: string, error: Error): Promise<void> {
+        await this.updateJob(
             id,
             100,
             true,
@@ -52,33 +55,43 @@ export class JobService {
         );
     }
 
-    public async updateJobProgress<T>(
+    public async updateJobProgress(id: string, progress: number): Promise<void> {
+        await this.updateJob(
+            id,
+            progress,
+            false,
+            null,
+            null,
+        );
+    }
+
+    private async updateJob<T>(
         id: string,
         progress: number,
         isFailed: boolean = false,
         error: Error,
-        result: Array<T>,
+        result: T,
     ): Promise<void> {
 
-        const current_job: Job = await this.jobRepository.findOne(
+        const current_job: IJob = await this.jobRepository.findOne(
             { id: id },
         );
 
         if (current_job) {
 
-            const current_date: number = t()
+            const current_date: number = Time()
                 .unix();
 
-            const is_job_finished: boolean = _.isEqual(
+            const is_job_finished: boolean = Util.isEqual(
                 progress,
                 100,
             );
 
-            const time_difference: number = t(current_job.timeOfActivate)
+            const time_difference: number = Time(current_job.timeOfActivate)
                 .subtract(current_date, 'second')
                 .unix();
 
-            const mutation: Partial<Job> = {
+            const mutation: Partial<IJob> = {
                 jobProgress: progress,
                 timeOfEllapsed: time_difference,
             };
@@ -89,6 +102,9 @@ export class JobService {
                  * If Job progress equals 100 - define job finish time and status.
                  */
 
+                const job_status: JobStatus = isFailed ?
+                    JobStatus.FAILED : JobStatus.COMPLETED;
+
                 Object.defineProperties(
                     mutation,
                     {
@@ -96,8 +112,7 @@ export class JobService {
                             value: current_date,
                         },
                         jobStatus: {
-                            value: isFailed ?
-                                JobStatus.FAILED : JobStatus.COMPLETED,
+                            value: job_status,
                         },
                     },
                 );
@@ -114,7 +129,7 @@ export class JobService {
                     Object.defineProperty(
                         mutation,
                         'result',
-                        result.length,
+                        result,
                     );
                 }
 

@@ -1,8 +1,6 @@
 import { BullModule } from '@nestjs/bull';
 import { Module } from '@nestjs/common';
 
-import { FetchProcessor } from '@platform/auto/modules/fetch/fetch.processor';
-import { FetchService } from '@platform/auto/modules/fetch/fetch.service';
 import { JobService } from '@platform/auto/modules/job/job.service';
 
 @Module({
@@ -16,9 +14,10 @@ import { JobService } from '@platform/auto/modules/job/job.service';
         }),
     ],
     providers: [
-        FetchService,
-        FetchProcessor,
-        JobService
+        {
+            provide: Symbol('IJobService'),
+            useClass: JobService,
+        },
     ],
 })
-export class FetchModule {}
+export class JobModule {}

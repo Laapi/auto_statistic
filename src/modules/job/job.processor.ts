@@ -5,34 +5,36 @@ import {
     Processor,
     Process,
 } from '@nestjs/bull';
-import { LoggerService, Logger } from '@nestjs/common';
 
-import { JobService } from '@platform/auto/modules/job/job.service';
+import { LoggerService, Logger, Inject } from '@nestjs/common';
+
+import { IJobService } from '@platform/auto/data/contracts/services/IJobService';
+import { IJob } from '@platform/auto/data/contracts/IJob';
+
+import { Job } from 'bull';
 import { JobType } from '@platform/auto/data/enum/JobType';
-import { Job } from '@platform/auto/data/entities/Job';
 
-import { Job as QueueJob } from 'bull';
-
-@Processor('fetch_queue')
-export class FetchProcessor {
+@Processor('job_queue')
+export class JobProcessor {
 
     private readonly logger: LoggerService;
 
     public constructor(
-        private readonly jobService: JobService,
+        @Inject(Symbol('IJobService'))
+        private readonly jobService: IJobService,
     ) {
-        this.logger = new Logger(FetchProcessor.name);
+        this.logger = new Logger(JobProcessor.name);
     }
 
     @OnQueueActive()
-    public async onActive(job: QueueJob<Job>): Promise<void> {
+    public async onActive(job: Job<IJob>): Promise<void> {
 
         /**
          * Create job in database.
          */
-        const job_entity: Job = await this.jobService.createJob(
+        const job_entity: IJob = await this.jobService.createJob(
             job.id,
-            JobType.FETCH_CARS_FROM_ONLINER,
+            job.data.jobType,
         );
 
         /**
@@ -46,7 +48,7 @@ export class FetchProcessor {
     }
 
     @OnQueueCompleted()
-    public onCompleted(job: QueueJob<Job>, result: Array<number>): void {
+    public onCompleted(job: Job<IJob>, result: Array<unknown>): void {
 
         this.jobService.finishJob(
             job.data.id,
@@ -63,7 +65,7 @@ export class FetchProcessor {
     }
 
     @OnQueueFailed()
-    public onError(job: QueueJob<Job>, error: Error): void {
+    public onError(job: Job<IJob>, error: Error): void {
 
         this.jobService.markJobAsFailed(
             job.data.id,
@@ -75,25 +77,32 @@ export class FetchProcessor {
         );
     }
 
-    // @Process('fetch_manufacturers_from_onliner')
-    // public async fetchManufacturersFromOnliner(): Promise<Array<number>> {
-    //
-    // }
-
-    @Process('fetch_cars_from_onliner')
-    public async fetchCarsFromOnliner(job: QueueJob<Job>): Promise<Array<number>> {
-
-        const platformPages: number = 200;
-
-        const amountOfPages: IterableIterator<number> = Array.from(
-            Array(platformPages),
-        ).keys();
+    @Process('job_processor')
+    public async fetchCarsFromOnliner(job: Job<IJob>): Promise<Array<number>> {
 
         const job_data: Array<number> = Array.from<number>(
             [],
         );
 
         try {
+
+            switch (job.data.jobType) {
+
+            case JobType.COLLECT_CAR_ADVERTS_FROM_ONLINER: {
+                break;
+            }
+
+            case JobType.COLLECT_CAR_MANUFACTURERS_FROM_ONLINER: {
+                break;
+            }
+
+            }
+
+            const platformPages: number = 200;
+
+            const amountOfPages: IterableIterator<number> = Array.from(
+                Array(platformPages),
+            ).keys();
 
             for (const pageNumber of amountOfPages) {
 
@@ -126,9 +135,6 @@ export class FetchProcessor {
                 await this.jobService.updateJobProgress(
                     job.data.id,
                     jobProgress,
-                    false,
-                    null,
-                    null,
                 );
 
             }

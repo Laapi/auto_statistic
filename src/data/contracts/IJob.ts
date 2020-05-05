@@ -1,7 +1,10 @@
 import { JobStatus } from '@platform/auto/data/enum/JobStatus';
 import { JobType } from '@platform/auto/data/enum/JobType';
 
-export interface IJob {
+import { IRunable } from '@platform/auto/data/contracts/base/IRunable';
+import { IEntity } from '@platform/auto/data/contracts/base/IEntity';
+
+export interface IJob extends IEntity, IRunable {
 
     readonly jobID: string;
 
