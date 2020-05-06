@@ -1,12 +1,14 @@
 import { BullModule } from '@nestjs/bull';
 import { Module } from '@nestjs/common';
 
+import { JOB_SERVICE } from '@platform/auto/data/ioc/constants';
+
 import { JobService } from '@platform/auto/modules/job/job.service';
 
 @Module({
     imports: [
         BullModule.registerQueue({
-            name: 'fetch_queue',
+            name: 'job_queue',
             redis: {
                 host: 'localhost',
                 port: 6379,
@@ -15,7 +17,7 @@ import { JobService } from '@platform/auto/modules/job/job.service';
     ],
     providers: [
         {
-            provide: Symbol('IJobService'),
+            provide: JOB_SERVICE,
             useClass: JobService,
         },
     ],

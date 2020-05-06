@@ -27,17 +27,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4076d08e-f3bb-466e-8e46-818aadaf8afe" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/data/contracts/services/IJobScheduleService.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/data/contracts/services/IJobService.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/modules/job/job.module.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/modules/job/job.schedule.service.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/data/ioc/constants.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/contracts/IJob.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/contracts/IJob.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/enum/JobType.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/enum/JobType.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/fetch/fetch.module.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/fetch/fetch.processor.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/job/job.processor.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/fetch/fetch.service.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/job/job.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/job/job.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/job/job.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/job/job.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/job/job.processor.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/job/job.processor.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,8 +47,8 @@
   <component name="Git.Settings">
     <option name="PREVIOUS_COMMIT_AUTHORS">
       <list>
-        <option value="Mikalai Ulasevich &lt;mikalaiulasevich@gmail.com&gt;A" />
         <option value="Mikalai Ulasevich &lt;mikalaiulasevich@gmail.com&gt;" />
+        <option value="Mikalai Ulasevich &lt;mikalaiulasevich@gmail.com&gt;A" />
         <option value="Mikalai Ulasevich &lt;mikalaiulasevich@gmai.com&gt;" />
       </list>
     </option>
@@ -185,7 +178,8 @@
       <workItem from="1588496400921" duration="1619000" />
       <workItem from="1588498033856" duration="4159000" />
       <workItem from="1588504445810" duration="9279000" />
-      <workItem from="1588576481440" duration="25694000" />
+      <workItem from="1588576481440" duration="25906000" />
+      <workItem from="1588776294140" duration="1487000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit.">
       <created>1588499722333</created>
@@ -236,7 +230,14 @@
       <option name="project" value="LOCAL" />
       <updated>1588616776917</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Refactor job management.">
+      <created>1588688250465</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1588688250465</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -274,7 +275,8 @@
     <MESSAGE value="Change pipeline settings." />
     <MESSAGE value="Add entities. Add job management logic." />
     <MESSAGE value="Add Idea Folder." />
-    <option name="LAST_COMMIT_MESSAGE" value="Add Idea Folder." />
+    <MESSAGE value="Refactor job management." />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactor job management." />
   </component>
   <component name="WindowStateProjectService">
     <state x="738" y="399" key="#JavaScript" timestamp="1588496793630">
@@ -305,34 +307,34 @@
       <screen x="0" y="23" width="2560" height="1321" />
     </state>
     <state x="707" y="413" width="1087" height="540" key="#docker-compose.yml:_Compose_Deployment/0.23.2560.1321@0.23.2560.1321" timestamp="1588504997211" />
-    <state x="598" y="264" key="CommitChangelistDialog2" timestamp="1588616776252">
+    <state x="598" y="264" key="CommitChangelistDialog2" timestamp="1588688245484">
       <screen x="0" y="23" width="2560" height="1321" />
     </state>
-    <state x="598" y="264" key="CommitChangelistDialog2/0.23.2560.1321@0.23.2560.1321" timestamp="1588616776252" />
-    <state width="2022" height="380" key="GridCell.Tab.0.bottom" timestamp="1588579024534">
+    <state x="598" y="264" key="CommitChangelistDialog2/0.23.2560.1321@0.23.2560.1321" timestamp="1588688245484" />
+    <state width="2022" height="380" key="GridCell.Tab.0.bottom" timestamp="1588688451501">
       <screen x="0" y="23" width="2560" height="1321" />
     </state>
-    <state width="2022" height="380" key="GridCell.Tab.0.bottom/0.23.2560.1321@0.23.2560.1321" timestamp="1588579024534" />
-    <state width="2022" height="380" key="GridCell.Tab.0.center" timestamp="1588579024533">
+    <state width="2022" height="380" key="GridCell.Tab.0.bottom/0.23.2560.1321@0.23.2560.1321" timestamp="1588688451501" />
+    <state width="2022" height="380" key="GridCell.Tab.0.center" timestamp="1588688451501">
       <screen x="0" y="23" width="2560" height="1321" />
     </state>
-    <state width="2022" height="380" key="GridCell.Tab.0.center/0.23.2560.1321@0.23.2560.1321" timestamp="1588579024533" />
-    <state width="2022" height="380" key="GridCell.Tab.0.left" timestamp="1588579024533">
+    <state width="2022" height="380" key="GridCell.Tab.0.center/0.23.2560.1321@0.23.2560.1321" timestamp="1588688451501" />
+    <state width="2022" height="380" key="GridCell.Tab.0.left" timestamp="1588688451500">
       <screen x="0" y="23" width="2560" height="1321" />
     </state>
-    <state width="2022" height="380" key="GridCell.Tab.0.left/0.23.2560.1321@0.23.2560.1321" timestamp="1588579024533" />
-    <state width="2022" height="380" key="GridCell.Tab.0.right" timestamp="1588579024533">
+    <state width="2022" height="380" key="GridCell.Tab.0.left/0.23.2560.1321@0.23.2560.1321" timestamp="1588688451500" />
+    <state width="2022" height="380" key="GridCell.Tab.0.right" timestamp="1588688451501">
       <screen x="0" y="23" width="2560" height="1321" />
     </state>
-    <state width="2022" height="380" key="GridCell.Tab.0.right/0.23.2560.1321@0.23.2560.1321" timestamp="1588579024533" />
+    <state width="2022" height="380" key="GridCell.Tab.0.right/0.23.2560.1321@0.23.2560.1321" timestamp="1588688451501" />
     <state x="391" y="557" width="1246" height="722" key="SettingsEditor" timestamp="1588667462310">
       <screen x="0" y="23" width="2560" height="1321" />
     </state>
     <state x="391" y="557" width="1246" height="722" key="SettingsEditor/0.23.2560.1321@0.23.2560.1321" timestamp="1588667462310" />
-    <state x="621" y="423" key="Vcs.Push.Dialog.v2" timestamp="1588616777915">
+    <state x="621" y="423" key="Vcs.Push.Dialog.v2" timestamp="1588688252017">
       <screen x="0" y="23" width="2560" height="1321" />
     </state>
-    <state x="621" y="423" key="Vcs.Push.Dialog.v2/0.23.2560.1321@0.23.2560.1321" timestamp="1588616777915" />
+    <state x="621" y="423" key="Vcs.Push.Dialog.v2/0.23.2560.1321@0.23.2560.1321" timestamp="1588688252017" />
     <state x="809" y="604" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1588501756333">
       <screen x="0" y="23" width="2560" height="1321" />
     </state>

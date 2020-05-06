@@ -8,11 +8,15 @@ import {
 
 import { LoggerService, Logger, Inject } from '@nestjs/common';
 
+import { JOB_SERVICE } from '@platform/auto/data/ioc/constants';
+
 import { IJobService } from '@platform/auto/data/contracts/services/IJobService';
 import { IJob } from '@platform/auto/data/contracts/IJob';
 
-import { Job } from 'bull';
 import { JobType } from '@platform/auto/data/enum/JobType';
+
+
+import { Job } from 'bull';
 
 @Processor('job_queue')
 export class JobProcessor {
@@ -20,7 +24,7 @@ export class JobProcessor {
     private readonly logger: LoggerService;
 
     public constructor(
-        @Inject(Symbol('IJobService'))
+        @Inject(JOB_SERVICE)
         private readonly jobService: IJobService,
     ) {
         this.logger = new Logger(JobProcessor.name);
@@ -50,7 +54,7 @@ export class JobProcessor {
     @OnQueueCompleted()
     public onCompleted(job: Job<IJob>, result: Array<unknown>): void {
 
-        this.jobService.finishJob(
+        this.jobService.finishJob<unknown>(
             job.data.id,
             result,
         );
